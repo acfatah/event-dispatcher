@@ -24,12 +24,12 @@ class Event
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var object
      */
-    protected $sender;
+    private $sender;
 
     /**
      * Constructor.
@@ -40,11 +40,25 @@ class Event
      */
     public function __construct($name, $sender)
     {
-        $this->name = $name;
         if (!is_object($sender)) {
             throw new RuntimeException('Sender is not an object instance!');
         }
-        $this->sender = $sender;
+
+        $this
+            ->setName($name)
+            ->setSender($sender);
+    }
+
+    /**
+     * Internally sets the event name.
+     *
+     * @param string $name
+     */
+    protected function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -55,6 +69,18 @@ class Event
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Internally sets the event sender.
+     *
+     * @param object $sender
+     */
+    protected function setSender($sender)
+    {
+        $this->sender = $sender;
+
+        return $this;
     }
 
     /**
