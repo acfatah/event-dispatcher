@@ -54,26 +54,33 @@ class Dispatcher
      *
      * @param string $eventName
      * @param callable $listener
+     * @return static
      */
     public function add($eventName, callable $listener)
     {
         $this->listeners[$eventName][] = $listener;
+
+        return $this;
     }
 
     /**
      * Removes all listeners from an event.
      *
      * @param string $eventName
+     * @return static
      */
     public function reset($eventName)
     {
         unset($this->listeners[$eventName]);
+
+        return $this;
     }
 
     /**
      * Dispatches an event instance to all registered listeners.
      *
      * @param Event $event
+     * @return static
      */
     public function dispatch(Event $event)
     {
@@ -82,5 +89,7 @@ class Dispatcher
                 call_user_func($listener, $event);
             }
         }
+
+        return $this;
     }
 }
